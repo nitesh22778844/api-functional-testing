@@ -25,6 +25,7 @@ from .tools import auth as _auth
 from .tools import http_runner as _http_runner
 from .tools import logs as _logs
 from .tools import orchestrate as _orchestrate
+from .tools import suite_generator as _suite_generator
 from .tools.suite import read_test_suite as _read_test_suite
 
 mcp = FastMCP("api-log-test-mcp")
@@ -41,6 +42,18 @@ def read_test_suite(path: str) -> TestSuite:
     are skipped, never fatal).
     """
     return _read_test_suite(path)
+
+
+@mcp.tool
+def generate_test_suite(spec_path: str, output_path: str | None = None) -> dict[str, Any]:
+    """Generate a runnable .xlsx test suite from an OpenAPI YAML spec.
+
+    Builds comprehensive validation coverage (a positive case per operation plus one negative
+    case per validation rule) in the same sheet format ``read_test_suite``/``run_and_record``
+    consume. Returns a summary with ``output_path``, ``base_path``, ``case_count`` and
+    ``cases_by_category``.
+    """
+    return _suite_generator.generate_test_suite(spec_path, output_path)
 
 
 @mcp.tool

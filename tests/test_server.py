@@ -6,6 +6,7 @@ from api_log_test_mcp.server import mcp
 
 EXPECTED_TOOLS = {
     "read_test_suite",
+    "generate_test_suite",
     "assert_response",
     "snapshot_logs",
     "validate_logs",
